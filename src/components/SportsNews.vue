@@ -1,34 +1,41 @@
 <template>
-    <div>
-      <h2>Okay great Route is working</h2>  
-      <div v-for="art in article" :key="art.id"  class="data-render">
-          {{art}}
+    <div class="sports-news">
+      <h2>Sports News</h2>  
+      <div v-for="art in getArticle" :key="art.id"  class="data-render">
+          <h2 class="fw-bold p-2 d-block">{{art.author}}</h2>
+          <p class="description m-2">{{art.description}}</p>
+          
       </div>
     </div>
     
 </template>
 
 <script>
+  import { mapGetters, mapActions } from "vuex";
 export default {
+  
     name:"SportsNews",
     data(){
         return{
-            apiKey : "1889426e916a441c97e27565bb4c753b",
-            article : {}, 
+            
         }
     },
     created (){
-        fetch(`https://newsapi.org/v2/everything?q=Apple&from=2022-03-20&sortBy=popularity&apiKey=${this.apiKey}`)
-        .then(res => res.json()).then(data => {
-            console.log(data);
-            this.article = data.articles;
-            console.log(this.article);
-            
-        })
+        this.getNews();
         
     },
     methods :{
-        
+        ...mapActions(['getNews'])
+    }
+    ,
+    computed : {
+        ...mapGetters(['getApiKey', 'getArticle'])
     }
 }
 </script>
+
+<style>
+    .sports-news{
+        background: #eaeaea;
+    }
+</style>
