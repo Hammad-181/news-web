@@ -20,7 +20,7 @@ const routes = [
     name: 'SportsNews',
     //component: () => import('../components/SportsNews.vue')
     component: () => import(/* webpackChunkName: "Sportsnews" */ '../components/SportsNews.vue')
-  }
+  },
 ]
 
 const router = createRouter({

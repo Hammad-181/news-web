@@ -5,7 +5,7 @@
                 <div class="card-body">
                     <img class="card-img-top mb-3" width="250" height="150" :src="getImageUrl(type.image)" alt="Card image cap">
                     <h5 class="card-title">{{type.newsType}}</h5>
-                    <p class="card-text">{{`Find latest ${type.newsType} news`}}</p>
+                    <p class="card-text"> {{`Find latest ${type.newsType} news`}} </p>
                     <button @click="OnSportsNews" class="btn btn-primary"> Find News</button>
                 </div>
             </div>
@@ -15,7 +15,7 @@
 </template>
 <script>
 
-
+import {mapGetters} from 'vuex';
 export default {
     name:"SportsCard",
     data(){
@@ -28,14 +28,13 @@ export default {
                 {newsType: "Stocks" , image: 'stocks.jpeg'},
                 {newsType: "Health" , image: 'health.jpeg'},
                 {newsType: "Food" , image: 'food.jpeg'},
-                {newsType: "Travel" , image: 'travel.jpeg'},
-                
+                {newsType: "Travel" , image: 'travel.jpeg'},    
             ]
         }
     },
     methods:{
-        OnSportsNews(){
-            this.$router.push("/sports")
+        OnSportsNews(){    
+                this.$router.push("/sports")
         },
         onIndexClick(){
             let keyValue = document.getElementById("key").value ;
@@ -52,6 +51,9 @@ export default {
             return images('./'+ img);
         }
 
+    },
+    computed : {
+        ...mapGetters(['getArticle'])
     }
 }
 </script>
