@@ -27,7 +27,7 @@ export default {
             {newsType: "Crypto" , image: 'crypto.jpeg', button : 'News'},
             {newsType: "Technology" , image: 'stocks.jpeg' , button : 'News'},
             {newsType: "Health" , image: 'health.jpeg', button : 'News'},
-            {newsType: "Science" , image: 'food.jpeg', button : 'News'},
+            {newsType: "Science" , image: 'Science.jpeg', button : 'News'},
             {newsType: "General" , image: 'travel.jpeg', button : 'News'},    
         ],
         }

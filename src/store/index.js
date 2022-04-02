@@ -19,14 +19,18 @@ export default createStore ({
     actions: {
         getNews (context, val){
           return new Promise((resolve, reject) => {
-            Axios.get(`https://newsapi.org/v2/top-headlines?country=in&category=${val.toLowerCase()}&apiKey=${context.getters.getApiKey}&pageSize=${context.getters.getTotal}`)
-            .then(res => {
-                console.log(res);
-                resolve(res.data) 
-            }).catch(err => {
-                reject(err.response.data.message);    
-            })
-          })
+              let url = val === 'Crypto' ? `https://newsapi.org/v2/everything?q=bitcoin&apiKey=1889426e916a441c97e27565bb4c753b` : `https://newsapi.org/v2/top-headlines?country=in&category=${val.toLowerCase()}&apiKey=${context.getters.getApiKey}&pageSize=${context.getters.getTotal}`
+                Axios.get(url)
+                .then(res => {
+                    console.log(res);
+                    resolve(res.data) 
+                }).catch(err => {
+                    reject({
+                        message:err.response.data.message,
+                        statusCode : err.response.status,
+                    });    
+                })
+            }) 
         }       
     },
 

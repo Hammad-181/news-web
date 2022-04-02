@@ -1,28 +1,26 @@
 <template>
-  <div class= "error font-dark" id="hide-error" :style="errorClass">
-      {{error}}
+<div class="page">
+   <div class= "card error font-dark d-flex w-50 h-50" style=" height: 20rem; font-size: 30px; margin-top:10rem;" id="hide-error">
+      <div class="message p-2">Error {{error.statusCode}} Not Found 
+        <div class="error-text m-4">{{error.message}}</div> 
+      </div>
+      <div class="home-button">
+        <button @click="onHome" class="btn w-25">Home</button>    
+      </div>
+      
   </div>
+</div>
+ 
 </template>
 
 <script>
 
 export default {
     name: 'Error',
-    props : ['errMsg'],
-    data(){
-      return{
-        error : '',
-        errorClass : 'display: none;',
-      }
-    },
+    props : ['error'],
     methods:{
-      showError(error){
-        this.error = error;
-        this.errorClass = 'display: block';
-        setTimeout(() => {
-          this.errorClass = 'display: none;';
-          console.log('ok')
-        }, 3000)
+      onHome(){
+        this.$router.push('/')
       }
     }
 }
@@ -30,6 +28,18 @@ export default {
 
 <style>
   .error{
-    display: none,
-  }
+    margin: auto;
+    width: 50%;
+    box-shadow: 0 , 0 , 0, 216;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+    }
+    .message{
+      color: white;
+      text-shadow: 2px 2px 4px #000000;
+    }
+    .home-button .btn:hover{
+      background: rgb(172, 170, 170);
+    }
 </style>
