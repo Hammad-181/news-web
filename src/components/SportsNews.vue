@@ -1,6 +1,7 @@
 <template>
+<div class="container w-100">
     <h1 class="card p-2 h-10 fw-bold">{{$route.params.id}} News</h1> 
-    <div  class="sports-news"> 
+    <div  class="sports-news w-100"> 
       <div v-for="art in articles" :key="art.id"  class="data-render d-flex card m-2 ">
           
                 <img class="image-render border-top p-2 " :src="art.urlToImage ? art.urlToImage :'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqEWgS0uxxEYJ0PsOb2OgwyWvC0Gjp8NUdPw&usqp=CAU'" alt="">
@@ -11,18 +12,17 @@
                 </div>            
 
       </div>
-      <div class="loader-buttons">
-           <button @click="onLoadClick" v-if="totalResults >= getTotal" class="btn m-2" style="align-items:center">Next Page</button>
-          <button class="page-btn">{{PageNo}}</button>
-          <button @click="onPrevious" class="previous-btn"> {{pageIcon}} </button>
-
+      <div class="loader-buttons d-flex">
+        <button @click="onPrevious" v-if="showPreviousButton" class="previous-btn"> {{pageIcon}} </button>
+        <button @click="onLoadClick" v-if="showLoadButton" class="btn m-2">Next Page</button>
+        <button class="page-btn">{{pageNo}}</button>
+        
       </div>
-     
-      <router-view/>
     </div>
     <div v-if="error" class="error">
         <Error :error="error"/>
     </div> 
+</div>   
 </template>
 
 <script>
@@ -37,7 +37,7 @@ export default {
             error : null,
             imgUrl : '',
             totalResults : 0,
-            PageNo : 1,
+            pageNo : 1,
             pageIcon : '<<'
         }
     },
@@ -58,18 +58,27 @@ export default {
         ...mapActions(['getNews']),
         onLoadClick(){
             this.$store.commit('setTotal', 10);
-            this.PageNo ++;
+            this.pageNo++;
             this.getNews(this.$route.params.id).then(res => this.articles = res.articles).catch(err => this.$refs.errorMessage.showError(err))
         },
         onPrevious(){
-            this.$store.commit('setTotal', -5)
-            this.PageNo -- ;
+            this.$store.commit('setTotal', -10)
+            this.getNews(this.$route.params.id).then(res => this.articles = res.articles).catch(err => this.$refs.errorMessage.showError(err))
+            this.pageNo-- ;
         }
 
     }
     ,
     computed : {
-        ...mapGetters(['getTotal'])
+        ...mapGetters(['getTotal']),
+        showLoadButton(){
+         return  this.totalResults >= this.getTotal;
+        },
+        showPreviousButton(){
+            return this.pageNo > 1;
+            console.log(this.pageNo)
+        }
+
     }
 }
 </script>
@@ -90,6 +99,7 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: center;
+        height: 100%;
     }
     .title{
         font-size: 25px;
@@ -111,34 +121,34 @@ export default {
         width: 300px;
         height : 270px;
         object-fit: cover;
+        
     }
-    .btn{
+    .loader-buttons .btn{
         align-content: center;
         border: none;
         box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16);
         margin-left: 20px;
         width:auto;
     }
-    .btn:hover{
+    .loader-buttons .btn:hover{
         background: rgb(202, 202, 214);
     }
-    .page-btn {
+    .loader-buttons .page-btn {
         align-content: center;
         border: none;
         box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16);
         height: 35px;
         width:40px;
     }
-    .previous-btn{
-        position: absolute;
-        left: 38rem;
-        margin-top: 10px;
-        box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16);
-        border: none;
-        height: 35px;
-        width:auto;
-        border: none;
+    .loader-buttons .previous-btn{
         align-content: center;
+        border: none;
+        box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16);
+        height: 35px;
+        width:40px;
+    }
+    .loader-buttons{
+        align-items: center;
     }
 
 </style>
