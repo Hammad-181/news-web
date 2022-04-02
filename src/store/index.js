@@ -20,7 +20,7 @@ export default createStore ({
         getNews (context, val){
           return new Promise((resolve, reject) => {
               let url = val === 'Crypto' ? `https://newsapi.org/v2/everything?q=bitcoin&apiKey=1889426e916a441c97e27565bb4c753b` : `https://newsapi.org/v2/top-headlines?country=in&category=${val.toLowerCase()}&apiKey=${context.getters.getApiKey}&pageSize=${context.getters.getTotal}`
-                Axios.get(url)
+                Axios.get(url, {headers:{origin : 'http://localhost:8080', referer :'http://localhost:8080'}})
                 .then(res => {
                     console.log(res);
                     resolve(res.data) 
