@@ -33,6 +33,6 @@ git push origin HEAD:gh-pages --force
 
 rm -r dist
 
-git checkout -f feature-development
+git checkout -f develop
 
 git branch -D gh-pages
