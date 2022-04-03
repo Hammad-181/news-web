@@ -13,9 +13,9 @@
 
       </div>
       <div class="loader-buttons d-flex">
-        <button @click="onPrevious" v-if="showPreviousButton" class="previous-btn"> {{pageIcon}} </button>
+        <button @click="onPrevious" v-if="showPreviousButton && !error" class="previous-btn"> {{pageIcon}} </button>
         <button @click="onLoadClick" v-if="showLoadButton" class="btn m-2">Next Page</button>
-        <button class="page-btn">{{pageNo}}</button>
+        <button v-if="!error" class="page-btn">{{pageNo}}</button>
         
       </div>
     </div>
@@ -76,7 +76,6 @@ export default {
         },
         showPreviousButton(){
             return this.pageNo > 1;
-            console.log(this.pageNo)
         }
 
     }

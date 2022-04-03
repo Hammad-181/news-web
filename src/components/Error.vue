@@ -27,7 +27,7 @@ export default {
 </script>
 
 <style>
-  .error{
+    .card .error{
     margin: auto;
     width: 50%;
     box-shadow: 0 , 0 , 0, 216;
