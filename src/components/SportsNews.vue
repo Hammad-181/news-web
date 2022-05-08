@@ -1,6 +1,9 @@
 <template>
 <div class="container w-100">
-    <h1 class="card p-2 h-10 fw-bold">{{$route.params.id}} News</h1> 
+    <div class="header-container">
+        <h1 class="card p-2 h-10 fw-bold">{{$route.params.id}} News <button @click="clickHome" type="button" class="btn btn-light">Home</button>
+        </h1> 
+    </div>
     <div  class="sports-news w-100"> 
       <div v-for="art in articles" :key="art.id"  class="data-render d-flex card m-2 ">
           
@@ -71,11 +74,14 @@ export default {
     ,
     computed : {
         ...mapGetters(['getTotal']),
-        showLoadButton(){
+        showLoadButton() {
          return  this.totalResults >= this.getTotal;
         },
-        showPreviousButton(){
+        showPreviousButton() {
             return this.pageNo > 1;
+        },
+        clickHome() {
+            this.$router.push(`/`);
         }
 
     }
@@ -148,6 +154,10 @@ export default {
     }
     .loader-buttons{
         align-items: center;
+    }
+    .btn-light{
+        align-content: center;
+        position: absolute;
     }
 
 </style>
